@@ -3603,7 +3603,7 @@ function Player(type) {
 
     missionCards = [];
 
-    points = 20;
+    points = 0;
     berserkerBonus = 0;
     teleportMode = false;
     usedTeleportThisTurn = false;
