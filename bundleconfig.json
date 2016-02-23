@@ -1,0 +1,38 @@
+[
+  {
+    "outputFileName": "css/styles.css",
+    "inputFiles": [
+      "css/style.css",
+      "css/main.css",
+      "css/normalize.css"
+    ]
+  },
+  {
+    "outputFileName": "js/scripts.js",
+    "inputFiles": [
+      "js/ChipType.js",
+      "js/Dialog.js",
+      "js/DungeonBoard.js",
+      "js/Game.js",
+      "js/HexagonMap.js",
+      "js/HexagonMapTile.js",
+      "js/Item.js",
+      "js/ItemType.js",
+      "js/Loader.js",
+      "js/Mission.js",
+      "js/MissionStack.js",
+      "js/MissionType.js",
+      "js/Monster.js",
+      "js/MonsterType.js",
+      "js/Player.js",
+      "js/PlayerType.js",
+      "js/SurfaceBoard.js",
+      "js/Tile.js",
+      "js/TileStack.js",
+      "js/TileType.js",
+      "js/TutorialStep.js",
+      "js/Utils.js",
+      "js/Startup.js"
+    ]
+  }
+]

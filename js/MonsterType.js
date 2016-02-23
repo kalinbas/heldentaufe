@@ -1,0 +1,5 @@
+var MonsterType = {
+    ZIPFLER: { nameKey: "monster_name_zipfler", x: 3, y: 2, stats: [{ lives: 2, power: 1 }, { lives: 2, power: 2 }, { lives: 3, power: 2 }, { lives: 3, power: 3 }, { lives: 3, power: 4 }], boardImage: 'zipfler_board.jpg', cssClass: 'zipfler', tokenImage: 'zipfler.png', portraitImage: 'zipflerPortrait.jpg', color: '#FBD266' },
+    ULUMUTU: { nameKey: "monster_name_ulumutu", x: 0, y: 5, stats: [{ lives: 3, power: 0 }, { lives: 3, power: 1 }, { lives: 4, power: 1 }, { lives: 4, power: 2 }, { lives: 4, power: 3 }], boardImage: 'ulumutu_board.jpg', cssClass: 'ulumutu', tokenImage: 'ulumutu.png', portraitImage: 'ulumutuPortrait.jpg', color: '#64665A' },
+    WALLROG: { nameKey: "monster_name_wallrog", x: 3, y: 5, stats: [{ lives: 1, power: 2 }, { lives: 1, power: 3 }, { lives: 2, power: 3 }, { lives: 2, power: 4 }, { lives: 2, power: 5 }], boardImage: 'wallrog_board.jpg', cssClass: 'wallrog', tokenImage: 'wallrog.png', portraitImage: 'wallrogPortrait.jpg', color: '#EC7166' },
+};

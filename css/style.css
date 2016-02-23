@@ -1,0 +1,934 @@
+﻿* {
+    font-family: 'Lato', sans-serif;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: default;
+    margin: 0;
+}
+
+p {
+    font-size: 17px;
+    cursor: default;
+}
+
+html, body {
+    overflow: hidden;
+    height: 100%;
+    background-color: #2B2724;
+    background-image: url('../img/background.jpg');
+    background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.player {
+    cursor: pointer;
+    height: 140px;
+    width: 112px;
+    float: left;
+    border: 3px solid white;
+}
+
+    .player:not(:first-child) {
+        margin-left: 2px;
+    }
+
+    .player.selected {
+        border: 3px solid black;
+    }
+
+    .player > img {
+        opacity: 0.7;
+    }
+
+    .player.selected > img {
+        opacity: 1;
+    }
+
+
+.missionPanel {
+    float: left;
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+    .missionPanel img {
+        height: 150px;
+    }
+
+.missionCard {
+    float: left;
+    position: relative;
+}
+
+    .missionCard:not(:first-child) {
+        margin-left: 20px;
+    }
+
+    .missionCard img {
+        height: 400px;
+        width: 257px;
+    }
+
+    .missionCard p {
+        position: absolute;
+        font-size: 18px;
+        text-align: left !important;
+        top: 100px;
+        left: 20px;
+        right: 20px;
+    }
+
+    .missionCard .replaceButton {
+        height: 50px;
+        width: 50px;
+        background-image: url(../img/missionicon.png);
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: white;
+    }
+
+    .missionCard .fulfillButton {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        background-color: yellow;
+        opacity: 0.4;
+    }
+
+    .missionCard .explainReward {
+        height: 70px;
+        width: 70px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .missionCard .explainCondition {
+        height: 110px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+.monsterBoard {
+    position: relative;
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+    .monsterBoard .dice {
+        position: absolute;
+        top: 90px;
+        left: 230px;
+        z-index: 3;
+    }
+
+    .monsterBoard.controlled {
+        visibility: hidden;
+    }
+
+    .monsterBoard.dead {
+        opacity: 0.3;
+    }
+
+    /*
+    .monsterBoard:hover {
+        z-index: 2;
+        -moz-transform: scale(1.2, 1.2);
+        -ms-transform: scale(1.2, 1.2);
+        -o-transform: scale(1.2, 1.2);
+        -webkit-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+        -moz-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+    }
+    */
+
+    .monsterBoard img.board {
+        width: 381px;
+        height: 200px;
+    }
+
+    .monsterBoard img.heart {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        z-index: 2;
+        top: 88px;
+    }
+
+    .monsterBoard.ulumutu img.heart1 {
+        left: 17px;
+    }
+
+    .monsterBoard.zipfler img.heart1, .monsterBoard.ulumutu img.heart2 {
+        left: 55px;
+    }
+
+    .monsterBoard.wallrog img.heart1, .monsterBoard.zipfler img.heart2, .monsterBoard.ulumutu img.heart3 {
+        left: 97px;
+    }
+
+    .monsterBoard.wallrog img.heart2, .monsterBoard.zipfler img.heart3, .monsterBoard.ulumutu img.heart4 {
+        top: 86px;
+        left: 154px;
+        width: 45px;
+        height: 45px;
+        z-index: 3;
+    }
+
+    .monsterBoard img.level {
+        position: absolute;
+        z-index: 2;
+    }
+
+    .monsterBoard img.level1 {
+        position: absolute;
+        top: 70px;
+        left: 144px;
+        height: 95px;
+    }
+
+    .monsterBoard img.level2 {
+        position: absolute;
+        top: 68px;
+        left: 142px;
+        height: 100px;
+    }
+
+    .monsterBoard img.level3 {
+        position: absolute;
+        top: 65px;
+        left: 141px;
+        height: 105px;
+    }
+
+    .monsterBoard img.level4 {
+        position: absolute;
+        top: 62px;
+        left: 141px;
+        height: 110px;
+    }
+
+    .monsterBoard img.level5 {
+        position: absolute;
+        top: 59px;
+        left: 135px;
+        height: 122px;
+    }
+
+
+
+.playerBoard {
+    position: relative;
+    width: 400px;
+    height: 200px;
+    float: left;
+}
+
+    .playerBoard .dice {
+        position: absolute;
+        right: 270px;
+        top: 110px;
+        z-index: 3;
+    }
+
+.showOverFade {
+    z-index: 103;
+}
+
+.playerBoard.other {
+    float: none;
+    margin: 0 auto;
+}
+
+
+.attackButtons {
+    position: absolute;
+    bottom: -73px;
+    width: 400px;
+    text-align: center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+    .attackButtons .btn:first-child {
+        margin-right: 20px;
+    }
+
+
+.actionPanel {
+    float: left;
+}
+
+    .actionPanel button {
+        display: block;
+    }
+
+
+img.item.discardable {
+    width: 36px;
+    height: 36px;
+    margin-right: 5px;
+}
+
+
+.playerPortait {
+    position: relative;
+    float: left;
+    margin-right: -65px;
+}
+
+
+
+    .playerPortait img {
+        border: 3px solid black;
+    }
+
+    .playerPortait.next4 img {
+        height: 100px;
+        margin-top: 5px;
+    }
+
+    .playerPortait.next3 img {
+        height: 110px;
+    }
+
+    .playerPortait.next2 img {
+        height: 120px;
+        margin-top: -5px;
+    }
+
+    .playerPortait.next1 img {
+        height: 130px;
+        margin-top: -10px;
+    }
+
+    .playerPortait.next0 img {
+        height: 140px;
+        margin-top: -15px;
+    }
+
+.playerBoard img.board {
+    width: 400px;
+    height: 200px;
+}
+
+.playerBoard img.item {
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    z-index: 2;
+}
+
+.playerBoard img.bootItem {
+    top: 60px;
+    left: 253px;
+}
+
+.playerBoard img.ringItem {
+    top: 105px;
+    left: 253px;
+}
+
+.playerBoard img.swordItem {
+    top: 151px;
+    left: 253px;
+}
+
+.playerBoard.luphius img.bootItem {
+    left: 210px;
+}
+
+.playerBoard.luphius img.ringItem {
+    left: 210px;
+}
+
+.playerBoard.luphius img.swordItem {
+    left: 210px;
+}
+
+.playerBoard.luphius img.potion1Item {
+    top: 152px;
+    left: 309px;
+}
+
+.playerBoard img.potion1Item {
+    top: 152px;
+    left: 332px;
+}
+
+.playerBoard.luphius img.backpack1Item {
+    top: 63px;
+    left: 267px;
+}
+
+.playerBoard img.backpack1Item, .playerBoard.luphius img.backpack2Item {
+    top: 63px;
+    left: 309px;
+}
+
+.playerBoard img.backpack2Item, .playerBoard.luphius img.backpack3Item {
+    top: 63px;
+    left: 353px;
+}
+
+.playerBoard img.backpack3Item {
+    top: 106px;
+    left: 333px;
+}
+
+.playerBoard.luphius img.backpack4Item {
+    top: 106px;
+    left: 287px;
+}
+
+.playerBoard.luphius img.backpack5Item {
+    top: 106px;
+    left: 330px;
+}
+
+.playerBoard img.heart {
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    z-index: 2;
+}
+
+.playerBoard.nathaniel img.heart1 {
+    top: 11px;
+    left: 107px;
+}
+
+.playerBoard.nathaniel img.heart2 {
+    top: 11px;
+    left: 148px;
+}
+
+.playerBoard img.heart1, .playerBoard.nathaniel img.heart3 {
+    top: 11px;
+    left: 188px;
+}
+
+.playerBoard img.heart2, .playerBoard.luphius img.heart1, .playerBoard.nathaniel img.heart4 {
+    top: 11px;
+    left: 229px;
+}
+
+.playerBoard img.heart3, .playerBoard.luphius img.heart2, .playerBoard.nathaniel img.heart5 {
+    top: 11px;
+    left: 269px;
+}
+
+.playerBoard img.heart4, .playerBoard.luphius img.heart3, .playerBoard.nathaniel img.heart6 {
+    top: 11px;
+    left: 309px;
+}
+
+.playerBoard img.heart5, .playerBoard.luphius img.heart4, .playerBoard.nathaniel img.heart7 {
+    top: 11px;
+    left: 350px;
+}
+
+.playerBoard.other img {
+    cursor: default;
+}
+
+.playerBoard div.pointLabel {
+    position: absolute;
+    top: 11px;
+    left: -30px;
+    background-image: url(../img/tooth1.png);
+    background-size: cover;
+    height: 78px;
+    width: 50px;
+    text-align: center;
+    z-index: 2;
+}
+
+    .playerBoard div.pointLabel span {
+        font-family: 'FETTECKE';
+    }
+
+        .playerBoard div.pointLabel span:first-child {
+            padding-top: 20px;
+            font-size: 20px;
+            display: block;
+            font-weight: bold;
+        }
+
+        .playerBoard div.pointLabel span:last-child {
+            font-size: 10px;
+            display: block;
+            font-weight: bold;
+        }
+
+.stepBox {
+    margin-top: 50px;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    position: relative;
+}
+
+    .stepBox img {
+        position: absolute;
+        bottom: 0px;
+        left: 5px;
+        height: 100px;
+    }
+
+    .stepBox span {
+        font-size: 35px;
+        font-weight: bold;
+        position: absolute;
+        bottom: 21px;
+        left: 37px;
+        pointer-events: none;
+        font-family: 'FETTECKE';
+    }
+
+
+.dialog .dialogTile, .dialog .dialogTileSmall {
+    float: left;
+    margin-right: 10px;
+}
+
+    .dialog .dialogTile.alignToP {
+        margin-top: 20px;
+    }
+
+.dialog .dialogTileSmall {
+    width: 100px;
+}
+
+.dialog .winDialog .dialogTileSmall {
+    float: none;
+    margin-top: 15px;
+}
+
+
+.dialog .dialogSelect {
+    float: right;
+}
+
+.dialog .actionPanel {
+    clear: both;
+    text-align: center;
+    width: 100%;
+}
+
+.dialog .smith .actionLine, .dialog .trader .actionLine, .dialog .castle .actionLine {
+    margin-bottom: 5px;
+}
+
+.dialog .smith img.item, .dialog .trader img.item, .dialog .castle img.item {
+    width: 36px;
+    height: 36px;
+    opacity: 0.3;
+}
+
+    .dialog .smith img.item.clickable, .dialog .trader img.item.clickable, .dialog .castle img.item.clickable {
+        opacity: 0.7;
+    }
+
+    .dialog .smith img.item.available, .dialog .trader img.item.available, .dialog .castle img.item.available {
+        opacity: 1.0;
+    }
+
+.dialog .contact {
+    clear: both;
+    margin-top: 10px;
+}
+
+    .dialog .contact input, .dialog .contact textarea {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 5px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .dialog .contact textarea {
+        height: 100px;
+    }
+
+    .dialog .contact .error {
+        border: solid 3px red;
+    }
+
+#loading {
+    display: block;
+    width: 900px;
+}
+
+html.no-js #loading {
+    display: none;
+}
+
+#errorScreen {
+    display: none;
+    width: 300px;
+}
+
+html.no-js #errorScreen {
+    display: block;
+}
+
+#loading, #errorScreen {
+    margin: 100px auto;
+    position: relative;
+    text-align: center;
+    color: #AE9867;
+}
+
+    #loading a, #errorScreen a {
+        color: #AE9867;
+    }
+
+/*
+    #loading > img {
+        -webkit-animation: turnLogo 3s linear infinite;
+        animation: turnLogo 3s linear infinite;
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+
+
+@keyframes turnLogo {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(-360deg);
+    }
+}
+
+@-webkit-keyframes turnLogo {
+    from {
+        -webkit-transform: rotateY(0deg);
+    }
+
+    to {
+        -webkit-transform: rotateY(-360deg);
+    }
+}
+    */
+
+
+#tutorial {
+    display: none;
+    position: absolute;
+    z-index: 101;
+    width: 260px;
+    height: 245px;
+    overflow: hidden;
+}
+
+    #tutorial.inFront {
+        z-index: 105;
+    }
+
+    #tutorial.tr {
+        background-image: url(../img/bubbletr.png);
+        padding-left: 15px;
+        padding-right: 25px;
+        padding-top: 10px;
+    }
+
+    #tutorial.br {
+        background-image: url(../img/bubblebr.png);
+        padding-left: 15px;
+        padding-right: 25px;
+        padding-bottom: 10px;
+    }
+
+    #tutorial.tl {
+        background-image: url(../img/bubbletl.png);
+        padding-left: 25px;
+        padding-right: 15px;
+        padding-top: 10px;
+    }
+
+    #tutorial.bl {
+        background-image: url(../img/bubblebl.png);
+        padding-left: 25px;
+        padding-right: 15px;
+        padding-bottom: 10px;
+    }
+
+    #tutorial h4 {
+        margin-top: 16px;
+    }
+
+    #tutorial p {
+        margin-top: 10px;
+        text-align: justify;
+    }
+
+    #tutorial.bl .btn {
+        position: absolute;
+        bottom: 25px;
+        right: 20px;
+    }
+
+    #tutorial.br .btn {
+        position: absolute;
+        bottom: 25px;
+        right: 25px;
+    }
+
+    #tutorial.tl .btn {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    #tutorial.tr .btn {
+        position: absolute;
+        bottom: 20px;
+        right: 25px;
+    }
+
+
+#fade {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: black;
+    opacity: 0.3;
+    width: 100%;
+    height: 100%;
+    z-index: 102;
+}
+
+#overlay {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    padding: 25px;
+    border: 3px solid black;
+    background-color: #ffffff;
+    left: 0;
+    right: 0;
+    width: 600px;
+    top: 50px;
+    z-index: 103;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+
+    #overlay p {
+        text-align: justify;
+    }
+
+    #overlay.withoutBorder {
+        background-color: transparent;
+        padding: 0;
+        border: none;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+    }
+
+#kickstarterButton {
+    right: 0;
+}
+
+#contactButton {
+    right: 60px;
+}
+
+
+#helpButton {
+    right: 120px;
+}
+
+#alchemyButton {
+    right: 180px;
+}
+
+.tabButton {
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    top: -20px;
+    background-color: white;
+    border-radius: 0px 0px 10px 10px;
+    border: 3px solid #000000;
+    border-top: none;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+}
+
+
+.shadowed {
+    /*
+        -webkit-filter: drop-shadow(1px 2px 2px #000);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=1, OffY=2, Color='#000')";
+        filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=1, OffY=2, Color='#000')";
+    */
+}
+
+
+.clickable {
+    cursor: pointer;
+}
+
+    .clickable.animated {
+        -webkit-filter: drop-shadow(1px 2px 5px #FF0);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=1, OffY=2, Color='#FF0')";
+        filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=1, OffY=2, Color='#FF0')";
+    }
+
+
+.rewards {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.diceWhite, .diceBlack, .diceTreasure {
+    background-size: cover;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+}
+
+.diceWhite {
+    background-image: url("../img/dicewhite.png");
+}
+
+.diceBlack {
+    background-image: url("../img/diceblack.png");
+}
+
+.diceTreasure {
+    background-image: url("../img/dicetreasure.png");
+    margin-right: 20px;
+}
+
+
+    .diceWhite.dice1, .diceBlack.dice1, .diceTreasure.dice1 {
+        background-position: 0px 0px;
+    }
+
+    .diceWhite.dice2, .diceBlack.dice2, .diceTreasure.dice2 {
+        background-position: -100px 0px;
+    }
+
+    .diceWhite.dice3, .diceBlack.dice3, .diceTreasure.dice3 {
+        background-position: -200px 0px;
+    }
+
+    .diceWhite.dice4, .diceBlack.dice4, .diceTreasure.dice4 {
+        background-position: -300px 0px;
+    }
+
+    .diceWhite.dice5, .diceBlack.dice5, .diceTreasure.dice5 {
+        background-position: -400px 0px;
+    }
+
+    .diceWhite.dice6, .diceBlack.dice6, .diceTreasure.dice6 {
+        background-position: -500px 0px;
+    }
+
+.btn {
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 10px;
+    text-shadow: 1px 1px 3px #000000;
+    -webkit-box-shadow: 0px 1px 3px #000000;
+    -moz-box-shadow: 0px 1px 3px #000000;
+    box-shadow: 0px 1px 3px #000000;
+    color: #ffffff;
+    font-size: 20px;
+    background: #6e6e6e;
+    padding: 10px 20px 10px 20px;
+    border: solid #000000 3px;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+    .btn:hover {
+        background: #8a8a8a;
+    }
+
+    .btn.disabled {
+        cursor: default;
+    }
+
+        .btn.disabled:hover {
+            background: #6e6e6e;
+        }
+
+
+#overlay .btn {
+    float: right;
+}
+
+    #overlay .btn.leftAligned {
+        float: left;
+    }
+
+    #overlay .btn.topSpace {
+        margin-top:20px;
+    }
+
+
+.arrow-right, .arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.arrow-right {
+    border-left: 5px solid black;
+}
+
+.arrow-left {
+    border-right: 5px solid black;
+}
+
+@font-face {
+    font-family: 'FETTECKE';
+    src: url('../fonts/FETTECKE.ttf.woff') format('woff'), url('../fonts/FETTECKE.ttf.svg#FETTECKE') format('svg'), url('../fonts/FETTECKE.ttf.eot'), url('../fonts/FETTECKE.ttf.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
