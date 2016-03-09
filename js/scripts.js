@@ -2265,6 +2265,7 @@ function Game() {
             trackEvent('start', 'withoutTutorial');
         }
 
+        $("#githubButton").show();
         $("#kickstarterButton").show();
         $("#contactButton").show();
         var pp = getElementPosition("#contactButton");

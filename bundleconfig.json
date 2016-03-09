@@ -30,7 +30,9 @@
   {
     "outputFileName": "css/styles.css",
     "inputFiles": [
-      "css/styles.css"
+      "css/style.css",
+      "css/main.css",
+      "css/normalize.css"
     ]
   }
 ]

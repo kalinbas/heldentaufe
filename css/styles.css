@@ -760,21 +760,24 @@ html.no-js #errorScreen {
         border-radius: 0;
     }
 
-#kickstarterButton {
+#githubButton {
     right: 0;
 }
 
-#contactButton {
+#kickstarterButton {
     right: 60px;
 }
 
-
-#helpButton {
+#contactButton {
     right: 120px;
 }
 
-#alchemyButton {
+#helpButton {
     right: 180px;
+}
+
+#alchemyButton {
+    right: 240px;
 }
 
 .tabButton {
@@ -943,7 +946,7 @@ html.no-js #errorScreen {
 
 /* ==========================================================================
    Base styles: opinionated defaults
-   ========================================================================= */
+   ========================================================================== */
 
 html,
 button,
