@@ -79,8 +79,9 @@ body {
     }
 
     .missionCard img {
-        height: 400px;
+        height: 396px;
         width: 257px;
+        border-radius: 24px;
     }
 
     .missionCard p {
@@ -90,6 +91,8 @@ body {
         top: 100px;
         left: 20px;
         right: 20px;
+        padding:5px;
+        background-color:rgba(255,255,255,0.4);
     }
 
     .missionCard .replaceButton {

@@ -49,7 +49,7 @@ function SurfaceBoard(startTileTile, intitialWidthX, intitialHeightPx, minWidthP
     };
 
     this.playerEntersAfterDeath = function (player) {       
-        var pos = map.getRandomPosition();
+        var pos = map.getResurrectPosition();
         map.movePlayerTo(pos.x, pos.y, player);
     };
 

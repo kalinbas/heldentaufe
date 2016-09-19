@@ -1327,6 +1327,7 @@ function Game() {
 
         // attack the character
         var looser = currentPlayer.attack(defendingCharacter);
+
         var lifesBefore = looser.getCurrentLifes() + 1;
         var looserIsAttacker = (currentPlayer === looser || currentPlayer.getControlledMonster() === looser);
         var container = looserIsAttacker ? "#currentPlayer" : "#defendingCharacter";
@@ -1387,7 +1388,7 @@ function Game() {
         hideTutorial();
 
         currentPlayer.createPotion(i1, i2, level);
-        
+      
         render();
         
         var pp = getElementPosition(".potion1Item");
@@ -2207,20 +2208,20 @@ function Game() {
             { type: MissionType.MISSION7, count: 1 },
             { type: MissionType.MISSION8, count: 1 },
             { type: MissionType.MISSION9, count: 1 },
-            { type: MissionType.MISSION10, count: 1 },
-            { type: MissionType.MISSION11, count: 1 },
-            { type: MissionType.MISSION12, count: 1 },
+            { type: MissionType.MISSION10, count: 2 },
+            { type: MissionType.MISSION11, count: 2 },
+            { type: MissionType.MISSION12, count: 2 },
             { type: MissionType.MISSION13, count: 1 },
             { type: MissionType.MISSION14, count: 1 },
             { type: MissionType.MISSION15, count: 1 },
             { type: MissionType.MISSION16, count: 1 },
             { type: MissionType.MISSION17, count: 1 },
             { type: MissionType.MISSION18, count: 1 },
-            /*{ type: MissionType.MISSION19, count: 1 },
-            { type: MissionType.MISSION20, count: 1 },
-            { type: MissionType.MISSION21, count: 1 },*/
             { type: MissionType.MISSION22, count: 2 },
-            { type: MissionType.MISSION23, count: 3 }
+            { type: MissionType.MISSION23, count: 4 },
+            { type: MissionType.MISSION24, count: 2 },
+            { type: MissionType.MISSION25, count: 2 },
+            { type: MissionType.MISSION26, count: 2 }
         ];
         missionStack = new MissionStack(config);
     }
@@ -2692,12 +2693,12 @@ function HexagonMap(width, height, offsetX, offsetY, allowMultiplePlayers, intit
         return tiles;
     }
 
-    this.getRandomPosition = function () {
-        var tile = null, pos = null;
-        while (!tile) {
-            pos = { x: Math.floor(Math.random() * width), y: Math.floor(Math.random() * height) };
-            tile = map[pos.x][pos.y];
-        }
+    this.getResurrectPosition = function () {
+        var pos = this.findPositionOfType(TileType.DUNGEON1);
+        if (!pos) pos = this.findPositionOfType(TileType.DUNGEON2);
+        if (!pos) pos = this.findPositionOfType(TileType.DUNGEON3);
+        if (!pos) pos = this.findPositionOfType(TileType.DUNGEON4);
+        if (!pos) pos = this.findPositionOfType(TileType.DUNGEON5);
         return pos;
     }
 
@@ -3253,7 +3254,7 @@ function Loader() {
     var imagesToLoad =
         ['grass.png', 'forest.png', 'resource1.png', 'resource2.png', 'resource3.png', 'castle.png', 'village.png',
          'trader.png', 'smith.png', 'dungeon1.png', 'dungeon2.png', 'dungeon3.png', 'dungeon4.png', 'dungeon5.png',
-         '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg', '22.jpg', '23.jpg',
+         '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '22.jpg', '23.jpg', '24.jpg', '25.jpg', '26.jpg', 
          'gulanzor_board.jpg', 'jupanillia_board.jpg', 'nathaniel_board.jpg', 'olofpak_board.jpg', 'luphius_board.jpg', 'gulanzor.png', 'jupanillia.png', 'nathaniel.png', 'olofpak.png', 'luphius.png',
          'gulanzorPortrait.jpg', 'jupanilliaPortrait.jpg', 'nathanielPortrait.jpg', 'olofpakPortrait.jpg', 'luphiusPortrait.jpg', 'monsterPortrait.jpg', 'ulumutuPortrait.jpg', 'wallrogPortrait.jpg', 'zipflerPortrait.jpg',
          'ulumutu_board.jpg', 'zipfler_board.jpg', 'wallrog_board.jpg', 'ulumutu.png', 'zipfler.png', 'wallrog.png', 'monsterplayer.jpg', 'dungeonboard.jpg',
@@ -3404,11 +3405,11 @@ var MissionType = {
     MISSION16: { image: '16.jpg', descKey: 'transport' },
     MISSION17: { image: '17.jpg', descKey: 'transport' },
     MISSION18: { image: '18.jpg', descKey: 'transport' },
-    MISSION19: { image: '19.jpg', descKey: 'transport' },
-    MISSION20: { image: '20.jpg', descKey: 'transport' },
-    MISSION21: { image: '21.jpg', descKey: 'transport' },
     MISSION22: { image: '22.jpg', descKey: 'disarm' },
     MISSION23: { image: '23.jpg', descKey: 'steal' },
+    MISSION24: { image: '24.jpg', descKey: 'helper' },
+    MISSION25: { image: '25.jpg', descKey: 'helper' },
+    MISSION26: { image: '26.jpg', descKey: 'helper' },
 };
 
 function Monster(type, startLevel) {
@@ -3585,7 +3586,7 @@ var MonsterType = {
 };
 function Player(type) {
 
-    var allItems, missionCards, stepsInTurn, points, lives, currentTile, neighbourTiles, berserkerBonus, teleportMode, usedTeleportThisTurn, usedCastleThisTurn, usedTraderThisTurn, isInDungeon, controlledMonster, self;
+    var allItems, missionCards, stepsInTurn, points, lives, currentTile, neighbourTiles, berserkerBonus, powerBonus, magicBonus, teleportMode, usedTeleportThisTurn, usedCastleThisTurn, usedTraderThisTurn, isInDungeon, controlledMonster, self;
     var hasFocus, hasMissionFocus, hasPointsFocus, hasStepFocus, doesShowLives, lastDice, lastTotal, lastWasAttacker;
 
     if (type === PlayerType.MONSTERPLAYER) {
@@ -3606,6 +3607,8 @@ function Player(type) {
 
     points = 0;
     berserkerBonus = 0;
+    magicBonus = 0;
+    powerBonus = 0;
     teleportMode = false;
     usedTeleportThisTurn = false;
     usedCastleThisTurn = false;
@@ -3742,8 +3745,8 @@ function Player(type) {
 
     this.resetForResurrection = function () {
 
-        // reset lives
-        lives = type.lives;
+        // reset lives to 1!
+        lives = 1;
 
         stepsInTurn = 0;
         berserkerBonus = 0;
@@ -3777,6 +3780,9 @@ function Player(type) {
         usedTeleportThisTurn = false;
         usedCastleThisTurn = false;
         usedTraderThisTurn = false;
+
+        powerBonus = 0;
+        magicBonus = 0;
     };
 
     this.standsOn = function (tileType) {
@@ -3928,6 +3934,7 @@ function Player(type) {
     this.createPotion = function (i1, i2, level) {
         remove2ItemsAt(i1, i2);
         addItemToBackpack(new Item(ItemType.POTION, level));
+        magicBonus = 0;
     };
 
     this.doCurrentTileAction = function (traderAfterFunction) {
@@ -3974,11 +3981,11 @@ function Player(type) {
     }
 
     function calculatePower() {
-        return type.power + getBestItemLevel(ItemType.SWORD) + berserkerBonus;
+        return type.power + getBestItemLevel(ItemType.SWORD) + berserkerBonus + powerBonus;
     }
 
     function calculateMagic() {
-        return type.magic + getBestItemLevel(ItemType.RING);
+        return type.magic + getBestItemLevel(ItemType.RING) + magicBonus;
     }
 
     this.doesCurrentTileHaveAction = function (areEntrancesFree) {
@@ -4023,25 +4030,25 @@ function Player(type) {
             } else if (card.hasType(MissionType.MISSION9)) {
                 actionReady = currentTile.hasType(TileType.APPLE);
             } else if (card.hasType(MissionType.MISSION13)) {
-                actionReady = points >= 1 && currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.APPLE) >= 1;
+                actionReady = currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.APPLE) >= 2;
             } else if (card.hasType(MissionType.MISSION14)) {
-                actionReady = points >= 1 && currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.MUSHROOM) >= 1;
+                actionReady = currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.MUSHROOM) >= 2;
             } else if (card.hasType(MissionType.MISSION15)) {
-                actionReady = points >= 1 && currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.FISH) >= 1;
+                actionReady = currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.FISH) >= 2;
             } else if (card.hasType(MissionType.MISSION16)) {
                 actionReady = getItemCount(ItemType.POTION, 1) && currentTile.hasType(TileType.GRASS);
             } else if (card.hasType(MissionType.MISSION17)) {
                 actionReady = getItemCount(ItemType.POTION, 1) && currentTile.hasType(TileType.GRASS);
             } else if (card.hasType(MissionType.MISSION18)) {
                 actionReady = getItemCount(ItemType.POTION, 1) && currentTile.hasType(TileType.GRASS);
-            } else if (card.hasType(MissionType.MISSION19)) {
-                actionReady = currentTile.hasType(TileType.SMITH) && getItemCount(ItemType.APPLE) >= 4;
-            } else if (card.hasType(MissionType.MISSION20)) {
-                actionReady = currentTile.hasType(TileType.SMITH) && getItemCount(ItemType.FISH) >= 4;
-            } else if (card.hasType(MissionType.MISSION21)) {
-                actionReady = currentTile.hasType(TileType.SMITH) && getItemCount(ItemType.MUSHROOM) >= 4;
             } else if (card.hasType(MissionType.MISSION23)) {
                 actionReady = currentTile.hasOtherPlayerWithPoints(self);
+            } else if (card.hasType(MissionType.MISSION24)) {
+                actionReady = getItemCount(ItemType.APPLE) >= 1;
+            } else if (card.hasType(MissionType.MISSION25)) {
+                actionReady = getItemCount(ItemType.FISH) >= 1;
+            } else if (card.hasType(MissionType.MISSION26)) {
+                actionReady = getItemCount(ItemType.MUSHROOM) >= 1;
             }
         }
         return actionReady;
@@ -4172,6 +4179,8 @@ function Player(type) {
 
         stepsInTurn -= 1;
 
+        powerBonus = 0;
+
         return looser;
     };
 
@@ -4240,16 +4249,13 @@ function Player(type) {
         else if (mission.hasType(MissionType.MISSION10) || mission.hasType(MissionType.MISSION11) || mission.hasType(MissionType.MISSION12)) {
             addPoints(2);
         } else if (mission.hasType(MissionType.MISSION13)) {
-            removeItem(ItemType.APPLE);
-            addPoints(-1);
+            removeItem(ItemType.APPLE); removeItem(ItemType.APPLE);
             addItemToBackpack(new Item(ItemType.BOOT, 1));
         } else if (mission.hasType(MissionType.MISSION14)) {
-            removeItem(ItemType.MUSHROOM);
-            addPoints(-1);
+            removeItem(ItemType.MUSHROOM); removeItem(ItemType.MUSHROOM);
             addItemToBackpack(new Item(ItemType.SWORD, 1));
         } else if (mission.hasType(MissionType.MISSION15)) {
-            removeItem(ItemType.FISH);
-            addPoints(-1);
+            removeItem(ItemType.FISH); removeItem(ItemType.FISH);           
             addItemToBackpack(new Item(ItemType.RING, 1));
         } else if (mission.hasType(MissionType.MISSION16)) {
             removeItem(ItemType.POTION, 1);
@@ -4259,21 +4265,21 @@ function Player(type) {
             addItemToBackpack(new Item(ItemType.SWORD, 2));
         } else if (mission.hasType(MissionType.MISSION18)) {
             removeItem(ItemType.POTION, 1);
-            addItemToBackpack(new Item(ItemType.RING, 2));
-        } else if (mission.hasType(MissionType.MISSION19)) {
-            addPoints(3);
-            removeItem(ItemType.APPLE); removeItem(ItemType.APPLE); removeItem(ItemType.APPLE); removeItem(ItemType.APPLE);
-        } else if (mission.hasType(MissionType.MISSION20)) {
-            addPoints(3);
-            removeItem(ItemType.FISH); removeItem(ItemType.FISH); removeItem(ItemType.FISH); removeItem(ItemType.FISH);
-        } else if (mission.hasType(MissionType.MISSION21)) {
-            addPoints(3);
-            removeItem(ItemType.MUSHROOM); removeItem(ItemType.MUSHROOM); removeItem(ItemType.MUSHROOM); removeItem(ItemType.MUSHROOM);
+            addItemToBackpack(new Item(ItemType.RING, 2));        
         } else if (mission.hasType(MissionType.MISSION22)) {
             addPoints(2);
         } else if (mission.hasType(MissionType.MISSION23)) {
             addPoints(1);
             currentTile.removeOtherPlayerPoint(self);
+        } else if (mission.hasType(MissionType.MISSION24)) {
+            removeItem(ItemType.APPLE);
+            stepsInTurn += 1;
+        } else if (mission.hasType(MissionType.MISSION25)) {
+            removeItem(ItemType.FISH);
+            magicBonus += 1;
+        } else if (mission.hasType(MissionType.MISSION26)) {
+            removeItem(ItemType.MUSHROOM);
+            powerBonus += 2;
         }
     }
 
@@ -4625,7 +4631,7 @@ function SurfaceBoard(startTileTile, intitialWidthX, intitialHeightPx, minWidthP
     };
 
     this.playerEntersAfterDeath = function (player) {       
-        var pos = map.getRandomPosition();
+        var pos = map.getResurrectPosition();
         map.movePlayerTo(pos.x, pos.y, player);
     };
 

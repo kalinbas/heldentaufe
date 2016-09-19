@@ -17,9 +17,9 @@ var MissionType = {
     MISSION16: { image: '16.jpg', descKey: 'transport' },
     MISSION17: { image: '17.jpg', descKey: 'transport' },
     MISSION18: { image: '18.jpg', descKey: 'transport' },
-    MISSION19: { image: '19.jpg', descKey: 'transport' },
-    MISSION20: { image: '20.jpg', descKey: 'transport' },
-    MISSION21: { image: '21.jpg', descKey: 'transport' },
     MISSION22: { image: '22.jpg', descKey: 'disarm' },
     MISSION23: { image: '23.jpg', descKey: 'steal' },
+    MISSION24: { image: '24.jpg', descKey: 'helper' },
+    MISSION25: { image: '25.jpg', descKey: 'helper' },
+    MISSION26: { image: '26.jpg', descKey: 'helper' },
 };

@@ -368,6 +368,7 @@ function Game() {
 
         // attack the character
         var looser = currentPlayer.attack(defendingCharacter);
+
         var lifesBefore = looser.getCurrentLifes() + 1;
         var looserIsAttacker = (currentPlayer === looser || currentPlayer.getControlledMonster() === looser);
         var container = looserIsAttacker ? "#currentPlayer" : "#defendingCharacter";
@@ -428,7 +429,7 @@ function Game() {
         hideTutorial();
 
         currentPlayer.createPotion(i1, i2, level);
-        
+      
         render();
         
         var pp = getElementPosition(".potion1Item");
@@ -1248,20 +1249,20 @@ function Game() {
             { type: MissionType.MISSION7, count: 1 },
             { type: MissionType.MISSION8, count: 1 },
             { type: MissionType.MISSION9, count: 1 },
-            { type: MissionType.MISSION10, count: 1 },
-            { type: MissionType.MISSION11, count: 1 },
-            { type: MissionType.MISSION12, count: 1 },
+            { type: MissionType.MISSION10, count: 2 },
+            { type: MissionType.MISSION11, count: 2 },
+            { type: MissionType.MISSION12, count: 2 },
             { type: MissionType.MISSION13, count: 1 },
             { type: MissionType.MISSION14, count: 1 },
             { type: MissionType.MISSION15, count: 1 },
             { type: MissionType.MISSION16, count: 1 },
             { type: MissionType.MISSION17, count: 1 },
             { type: MissionType.MISSION18, count: 1 },
-            /*{ type: MissionType.MISSION19, count: 1 },
-            { type: MissionType.MISSION20, count: 1 },
-            { type: MissionType.MISSION21, count: 1 },*/
             { type: MissionType.MISSION22, count: 2 },
-            { type: MissionType.MISSION23, count: 3 }
+            { type: MissionType.MISSION23, count: 4 },
+            { type: MissionType.MISSION24, count: 2 },
+            { type: MissionType.MISSION25, count: 2 },
+            { type: MissionType.MISSION26, count: 2 }
         ];
         missionStack = new MissionStack(config);
     }

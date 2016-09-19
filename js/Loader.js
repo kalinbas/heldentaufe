@@ -3,7 +3,7 @@ function Loader() {
     var imagesToLoad =
         ['grass.png', 'forest.png', 'resource1.png', 'resource2.png', 'resource3.png', 'castle.png', 'village.png',
          'trader.png', 'smith.png', 'dungeon1.png', 'dungeon2.png', 'dungeon3.png', 'dungeon4.png', 'dungeon5.png',
-         '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg', '22.jpg', '23.jpg',
+         '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '22.jpg', '23.jpg', '24.jpg', '25.jpg', '26.jpg', 
          'gulanzor_board.jpg', 'jupanillia_board.jpg', 'nathaniel_board.jpg', 'olofpak_board.jpg', 'luphius_board.jpg', 'gulanzor.png', 'jupanillia.png', 'nathaniel.png', 'olofpak.png', 'luphius.png',
          'gulanzorPortrait.jpg', 'jupanilliaPortrait.jpg', 'nathanielPortrait.jpg', 'olofpakPortrait.jpg', 'luphiusPortrait.jpg', 'monsterPortrait.jpg', 'ulumutuPortrait.jpg', 'wallrogPortrait.jpg', 'zipflerPortrait.jpg',
          'ulumutu_board.jpg', 'zipfler_board.jpg', 'wallrog_board.jpg', 'ulumutu.png', 'zipfler.png', 'wallrog.png', 'monsterplayer.jpg', 'dungeonboard.jpg',

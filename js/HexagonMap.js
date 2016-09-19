@@ -87,12 +87,12 @@ function HexagonMap(width, height, offsetX, offsetY, allowMultiplePlayers, intit
         return tiles;
     }
 
-    this.getRandomPosition = function () {
-        var tile = null, pos = null;
-        while (!tile) {
-            pos = { x: Math.floor(Math.random() * width), y: Math.floor(Math.random() * height) };
-            tile = map[pos.x][pos.y];
-        }
+    this.getResurrectPosition = function () {
+        var pos = this.findPositionOfType(TileType.DUNGEON1);
+        if (!pos) pos = this.findPositionOfType(TileType.DUNGEON2);
+        if (!pos) pos = this.findPositionOfType(TileType.DUNGEON3);
+        if (!pos) pos = this.findPositionOfType(TileType.DUNGEON4);
+        if (!pos) pos = this.findPositionOfType(TileType.DUNGEON5);
         return pos;
     }
 

@@ -1,6 +1,6 @@
 function Player(type) {
 
-    var allItems, missionCards, stepsInTurn, points, lives, currentTile, neighbourTiles, berserkerBonus, teleportMode, usedTeleportThisTurn, usedCastleThisTurn, usedTraderThisTurn, isInDungeon, controlledMonster, self;
+    var allItems, missionCards, stepsInTurn, points, lives, currentTile, neighbourTiles, berserkerBonus, powerBonus, magicBonus, teleportMode, usedTeleportThisTurn, usedCastleThisTurn, usedTraderThisTurn, isInDungeon, controlledMonster, self;
     var hasFocus, hasMissionFocus, hasPointsFocus, hasStepFocus, doesShowLives, lastDice, lastTotal, lastWasAttacker;
 
     if (type === PlayerType.MONSTERPLAYER) {
@@ -21,6 +21,8 @@ function Player(type) {
 
     points = 0;
     berserkerBonus = 0;
+    magicBonus = 0;
+    powerBonus = 0;
     teleportMode = false;
     usedTeleportThisTurn = false;
     usedCastleThisTurn = false;
@@ -157,8 +159,8 @@ function Player(type) {
 
     this.resetForResurrection = function () {
 
-        // reset lives
-        lives = type.lives;
+        // reset lives to 1!
+        lives = 1;
 
         stepsInTurn = 0;
         berserkerBonus = 0;
@@ -192,6 +194,9 @@ function Player(type) {
         usedTeleportThisTurn = false;
         usedCastleThisTurn = false;
         usedTraderThisTurn = false;
+
+        powerBonus = 0;
+        magicBonus = 0;
     };
 
     this.standsOn = function (tileType) {
@@ -343,6 +348,7 @@ function Player(type) {
     this.createPotion = function (i1, i2, level) {
         remove2ItemsAt(i1, i2);
         addItemToBackpack(new Item(ItemType.POTION, level));
+        magicBonus = 0;
     };
 
     this.doCurrentTileAction = function (traderAfterFunction) {
@@ -389,11 +395,11 @@ function Player(type) {
     }
 
     function calculatePower() {
-        return type.power + getBestItemLevel(ItemType.SWORD) + berserkerBonus;
+        return type.power + getBestItemLevel(ItemType.SWORD) + berserkerBonus + powerBonus;
     }
 
     function calculateMagic() {
-        return type.magic + getBestItemLevel(ItemType.RING);
+        return type.magic + getBestItemLevel(ItemType.RING) + magicBonus;
     }
 
     this.doesCurrentTileHaveAction = function (areEntrancesFree) {
@@ -438,25 +444,25 @@ function Player(type) {
             } else if (card.hasType(MissionType.MISSION9)) {
                 actionReady = currentTile.hasType(TileType.APPLE);
             } else if (card.hasType(MissionType.MISSION13)) {
-                actionReady = points >= 1 && currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.APPLE) >= 1;
+                actionReady = currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.APPLE) >= 2;
             } else if (card.hasType(MissionType.MISSION14)) {
-                actionReady = points >= 1 && currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.MUSHROOM) >= 1;
+                actionReady = currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.MUSHROOM) >= 2;
             } else if (card.hasType(MissionType.MISSION15)) {
-                actionReady = points >= 1 && currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.FISH) >= 1;
+                actionReady = currentTile.hasType(TileType.VILLAGE) && getItemCount(ItemType.FISH) >= 2;
             } else if (card.hasType(MissionType.MISSION16)) {
                 actionReady = getItemCount(ItemType.POTION, 1) && currentTile.hasType(TileType.GRASS);
             } else if (card.hasType(MissionType.MISSION17)) {
                 actionReady = getItemCount(ItemType.POTION, 1) && currentTile.hasType(TileType.GRASS);
             } else if (card.hasType(MissionType.MISSION18)) {
                 actionReady = getItemCount(ItemType.POTION, 1) && currentTile.hasType(TileType.GRASS);
-            } else if (card.hasType(MissionType.MISSION19)) {
-                actionReady = currentTile.hasType(TileType.SMITH) && getItemCount(ItemType.APPLE) >= 4;
-            } else if (card.hasType(MissionType.MISSION20)) {
-                actionReady = currentTile.hasType(TileType.SMITH) && getItemCount(ItemType.FISH) >= 4;
-            } else if (card.hasType(MissionType.MISSION21)) {
-                actionReady = currentTile.hasType(TileType.SMITH) && getItemCount(ItemType.MUSHROOM) >= 4;
             } else if (card.hasType(MissionType.MISSION23)) {
                 actionReady = currentTile.hasOtherPlayerWithPoints(self);
+            } else if (card.hasType(MissionType.MISSION24)) {
+                actionReady = getItemCount(ItemType.APPLE) >= 1;
+            } else if (card.hasType(MissionType.MISSION25)) {
+                actionReady = getItemCount(ItemType.FISH) >= 1;
+            } else if (card.hasType(MissionType.MISSION26)) {
+                actionReady = getItemCount(ItemType.MUSHROOM) >= 1;
             }
         }
         return actionReady;
@@ -587,6 +593,8 @@ function Player(type) {
 
         stepsInTurn -= 1;
 
+        powerBonus = 0;
+
         return looser;
     };
 
@@ -655,16 +663,13 @@ function Player(type) {
         else if (mission.hasType(MissionType.MISSION10) || mission.hasType(MissionType.MISSION11) || mission.hasType(MissionType.MISSION12)) {
             addPoints(2);
         } else if (mission.hasType(MissionType.MISSION13)) {
-            removeItem(ItemType.APPLE);
-            addPoints(-1);
+            removeItem(ItemType.APPLE); removeItem(ItemType.APPLE);
             addItemToBackpack(new Item(ItemType.BOOT, 1));
         } else if (mission.hasType(MissionType.MISSION14)) {
-            removeItem(ItemType.MUSHROOM);
-            addPoints(-1);
+            removeItem(ItemType.MUSHROOM); removeItem(ItemType.MUSHROOM);
             addItemToBackpack(new Item(ItemType.SWORD, 1));
         } else if (mission.hasType(MissionType.MISSION15)) {
-            removeItem(ItemType.FISH);
-            addPoints(-1);
+            removeItem(ItemType.FISH); removeItem(ItemType.FISH);           
             addItemToBackpack(new Item(ItemType.RING, 1));
         } else if (mission.hasType(MissionType.MISSION16)) {
             removeItem(ItemType.POTION, 1);
@@ -674,21 +679,21 @@ function Player(type) {
             addItemToBackpack(new Item(ItemType.SWORD, 2));
         } else if (mission.hasType(MissionType.MISSION18)) {
             removeItem(ItemType.POTION, 1);
-            addItemToBackpack(new Item(ItemType.RING, 2));
-        } else if (mission.hasType(MissionType.MISSION19)) {
-            addPoints(3);
-            removeItem(ItemType.APPLE); removeItem(ItemType.APPLE); removeItem(ItemType.APPLE); removeItem(ItemType.APPLE);
-        } else if (mission.hasType(MissionType.MISSION20)) {
-            addPoints(3);
-            removeItem(ItemType.FISH); removeItem(ItemType.FISH); removeItem(ItemType.FISH); removeItem(ItemType.FISH);
-        } else if (mission.hasType(MissionType.MISSION21)) {
-            addPoints(3);
-            removeItem(ItemType.MUSHROOM); removeItem(ItemType.MUSHROOM); removeItem(ItemType.MUSHROOM); removeItem(ItemType.MUSHROOM);
+            addItemToBackpack(new Item(ItemType.RING, 2));        
         } else if (mission.hasType(MissionType.MISSION22)) {
             addPoints(2);
         } else if (mission.hasType(MissionType.MISSION23)) {
             addPoints(1);
             currentTile.removeOtherPlayerPoint(self);
+        } else if (mission.hasType(MissionType.MISSION24)) {
+            removeItem(ItemType.APPLE);
+            stepsInTurn += 1;
+        } else if (mission.hasType(MissionType.MISSION25)) {
+            removeItem(ItemType.FISH);
+            magicBonus += 1;
+        } else if (mission.hasType(MissionType.MISSION26)) {
+            removeItem(ItemType.MUSHROOM);
+            powerBonus += 2;
         }
     }
 
